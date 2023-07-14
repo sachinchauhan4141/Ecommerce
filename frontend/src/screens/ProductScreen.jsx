@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   Row,
@@ -9,12 +9,22 @@ import {
   Button,
   ListGroupItem,
 } from "react-bootstrap";
-import products from "../products";
+import axios from "axios";
 import Rating from "../components/Rating";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
-  const product = products.find((p) => p._id === productId);
+
+  const [product, setProduct] = useState([]);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/products/${productId}`);
+      setProduct(data);
+    };
+    fetchProduct();
+  }, [productId]);
+
   return (
     <>
       <Link className="btn btn-light my-3" to="/">
@@ -51,17 +61,19 @@ const ProductScreen = () => {
                 <Row>
                   <Col>Status:</Col>
                   <Col>
-                    <strong>{product.countInStock>0 ? 'In Stock':'Out Of Stock'}</strong>
+                    <strong>
+                      {product.countInStock > 0 ? "In Stock" : "Out Of Stock"}
+                    </strong>
                   </Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
-                <Button 
-                    className='btn-block'
-                    type='button'
-                    disabled={product.countInStock===0}
+                <Button
+                  className="btn-block"
+                  type="button"
+                  disabled={product.countInStock === 0}
                 >
-                  Add To Cart  
+                  Add To Cart
                 </Button>
               </ListGroupItem>
             </ListGroup>
