@@ -8,16 +8,21 @@
     "start": "node backend/index.js",
     "server": "npx nodemon backend/index.js",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "data:import":"node backend/seeder.js",
+    "data:destroy":"node backend/seeder.js -d"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "bcryptjs": "^2.4.3",
+    "colors": "^1.4.0",
+    "express": "^4.18.2",
+    "mongoose": "^7.3.4"
   },
   "devDependencies": {
-    "dotenv": "^16.3.1",
     "concurrently": "^8.2.0",
+    "dotenv": "^16.3.1",
     "nodemon": "^3.0.1"
   }
 }
